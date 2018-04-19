@@ -1,0 +1,32 @@
+{
+    "@context": "http://sdr.sul.stanford.edu/contexts/taco-base.jsonld",
+    "@type": "http://sdr.sul.stanford.edu/models/sdr3-object.jsonld",
+    "citation": "Doe, John, 1900-2000. [some link to purl]",
+    "depositor": {
+      "name": "DOR",
+      "sunetID": "DOR"
+    },
+    "label": "Doe, John. 1900-2000. Certified bad ass.",
+    "access": {
+      "access": "world",
+      "copyright": "This work is copyrighted by the creator.",
+      "download": "world",
+      "license": "http://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "reuseAndReproductionStatement": "Property rights reside with the repository. Literary rights reside with the creators of the documents or their heirs. To obtain permission to publish or reproduce, please contact the Special Collections Public Services Librarian at speccollref@stanford.edu."
+    },
+    "administrative": {
+      "deleted": false,
+      "lastUpdated": "2014-02-19T21:02:26.550Z",
+      "partOfProject": "TACO Benchmarking",
+      "sdrPreserve": true,
+      "remediatedBy": []
+    },
+    "identification": {
+      "sourceId": "Kolb_00015682",
+      "sdrUUID": "dbe81f8a-20b5-11e2-9c4a-0050569b52d5"
+    },
+    "structural": {
+      "hasAgreement": "druid:dd327qr3670"
+    }
+  }
+  
