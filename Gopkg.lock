@@ -52,16 +52,7 @@
 [[projects]]
   branch = "master"
   name = "github.com/go-openapi/runtime"
-  packages = [
-    ".",
-    "client",
-    "logger",
-    "middleware",
-    "middleware/denco",
-    "middleware/header",
-    "middleware/untyped",
-    "security"
-  ]
+  packages = [".","client","logger","middleware","middleware/denco","middleware/header","middleware/untyped","security"]
   revision = "1c997f7e69df84d5c13222f6491841512b5f45ea"
 
 [[projects]]
@@ -89,13 +80,15 @@
   revision = "659e09d234fdd860a2556c5a53fcfff6f787e24b"
 
 [[projects]]
+  name = "github.com/inconshreveable/mousetrap"
+  packages = ["."]
+  revision = "76626ae9c91c4f2a10f34cad8ce83ea42c93bb75"
+  version = "v1.0"
+
+[[projects]]
   branch = "master"
   name = "github.com/mailru/easyjson"
-  packages = [
-    "buffer",
-    "jlexer",
-    "jwriter"
-  ]
+  packages = ["buffer","jlexer","jwriter"]
   revision = "8b799c424f57fa123fc63a99d6383bc6e4c02578"
 
 [[projects]]
@@ -105,54 +98,39 @@
   revision = "00c29f56e2386353d58c599509e8dc3801b0d716"
 
 [[projects]]
+  name = "github.com/spf13/cobra"
+  packages = ["."]
+  revision = "a1f051bc3eba734da4772d60e2d677f47cf93ef4"
+  version = "v0.0.2"
+
+[[projects]]
+  name = "github.com/spf13/pflag"
+  packages = ["."]
+  revision = "583c0c0531f06d5278b7d917446061adc344b5cd"
+  version = "v1.0.1"
+
+[[projects]]
   branch = "client"
   name = "github.com/sul-dlss-labs/taco"
-  packages = [
-    "generated/client",
-    "generated/client/operations",
-    "generated/models"
-  ]
+  packages = ["generated/client","generated/client/operations","generated/models"]
   revision = "a87635d78e39d2465eaebbfc4be0ce0cd9752c1b"
 
 [[projects]]
   branch = "master"
   name = "golang.org/x/net"
-  packages = [
-    "context",
-    "context/ctxhttp",
-    "idna"
-  ]
+  packages = ["context","context/ctxhttp","idna"]
   revision = "d41e8174641f662c5a2d1c7a5f9e828788eb8706"
 
 [[projects]]
   name = "golang.org/x/text"
-  packages = [
-    "collate",
-    "collate/build",
-    "internal/colltab",
-    "internal/gen",
-    "internal/tag",
-    "internal/triegen",
-    "internal/ucd",
-    "language",
-    "secure/bidirule",
-    "transform",
-    "unicode/bidi",
-    "unicode/cldr",
-    "unicode/norm",
-    "unicode/rangetable",
-    "width"
-  ]
+  packages = ["collate","collate/build","internal/colltab","internal/gen","internal/tag","internal/triegen","internal/ucd","language","secure/bidirule","transform","unicode/bidi","unicode/cldr","unicode/norm","unicode/rangetable","width"]
   revision = "f21a4dfb5e38f5895301dc265a8def02365cc3d0"
   version = "v0.3.0"
 
 [[projects]]
   branch = "v2"
   name = "gopkg.in/mgo.v2"
-  packages = [
-    "bson",
-    "internal/json"
-  ]
+  packages = ["bson","internal/json"]
   revision = "3f83fa5005286a7fe593b055f0d7771a7dce4655"
 
 [[projects]]
@@ -164,6 +142,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "0e1422b70fed40d91ae00335589c96e1c09b71c56a497e045fcb983d1275ffe3"
+  inputs-digest = "83108f0931f6d4f9c53a482889dd13f5bf60c20e6ff7e68d7dc42c7c78ee6a65"
   solver-name = "gps-cdcl"
   solver-version = 1
