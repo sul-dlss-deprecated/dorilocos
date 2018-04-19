@@ -1,33 +1,44 @@
 package main
 
 import (
+	"bytes"
 	"flag"
+	"fmt"
+	"io/ioutil"
 	"log"
+	"net/http"
 	"time"
-
-	apiclient "github.com/sul-dlss-labs/taco/generated/client"
-	"github.com/sul-dlss-labs/taco/generated/client/operations"
 )
 
 var iterations int
 var concurrency int
 var host string
+var key string
 
 func init() {
 	flag.IntVar(&iterations, "n", 10000, "Total number of requests to make")
 	flag.IntVar(&concurrency, "c", 20, "Total number of concurrent requests")
 	flag.StringVar(&host, "s", "taco-demo.sul.stanford.edu", "Server to connect to")
+	flag.StringVar(&key, "k", "lmcrae@stanford.edu", "API key")
+
 }
 
 func main() {
 	flag.Parse()
+	log.Println("Health check")
 	benchmark(iterations, concurrency,
-		func(client *apiclient.Taco) error {
+		func(client *http.Client) error {
 			return healthCheckRequest(client)
+		})
+
+	log.Println("Deposit resource")
+	benchmark(iterations, concurrency,
+		func(client *http.Client) error {
+			return despositResourceRequest(client)
 		})
 }
 
-func benchmark(n int, concurrency int, method func(client *apiclient.Taco) error) {
+func benchmark(n int, concurrency int, method func(*http.Client) error) {
 	results := make(chan time.Duration, concurrency)
 	errors := make(chan error, concurrency)
 
@@ -53,13 +64,8 @@ func benchmark(n int, concurrency int, method func(client *apiclient.Taco) error
 
 }
 
-func worker(n int, results chan<- time.Duration, errors chan<- error, method func(client *apiclient.Taco) error) {
-	// create the transport
-	transport := apiclient.DefaultTransportConfig().
-		WithHost(host)
-	// create the API client
-	client := apiclient.NewHTTPClientWithConfig(nil, transport)
-	//apiKeyHeaderAuth := httptransport.APIKeyAuth("On-Behalf-Of", "header", os.Getenv("API_KEY"))
+func worker(n int, results chan<- time.Duration, errors chan<- error, method func(*http.Client) error) {
+	client := &http.Client{}
 
 	start := time.Now()
 	for i := 0; i < n; i++ {
@@ -73,11 +79,51 @@ func worker(n int, results chan<- time.Duration, errors chan<- error, method fun
 	results <- elapsed
 }
 
-func healthCheckRequest(client *apiclient.Taco) error {
-	_, err := client.Operations.HealthCheck(operations.NewHealthCheckParams()) //, apiKeyHeaderAuth)
+func healthCheckRequest(client *http.Client) error {
+
+	url := fmt.Sprintf("http://%s/v1/healthcheck", host)
+
+	resp, err := client.Get(url)
+
 	if err != nil {
+		log.Printf("Taco err: %s", err)
+
 		return err
 	}
-	// log.Printf("Taco says: %s", resp.Payload.Status)
+	switch resp.StatusCode {
+	case 200, 201, 204:
+		// do nothing
+	default:
+		return fmt.Errorf("Bad response: %v", resp.StatusCode)
+	}
+
+	return nil
+}
+
+func despositResourceRequest(client *http.Client) error {
+	byt, err := ioutil.ReadFile("examples/request.json")
+	if err != nil {
+		panic(err)
+	}
+	url := fmt.Sprintf("http://%s/v1/resource", host)
+
+	req, err := http.NewRequest("POST", url, bytes.NewReader(byt))
+	if err != nil {
+		panic(err)
+	}
+	req.Header.Add("On-Behalf-Of", key)
+	req.Header.Add("Content-Type", "application/json")
+	resp, err := client.Do(req)
+	if err != nil {
+		log.Printf("Taco err: %s", err)
+
+		return err
+	}
+	switch resp.StatusCode {
+	case 200, 201, 204:
+		// do nothing
+	default:
+		return fmt.Errorf("Bad response: %v", resp.StatusCode)
+	}
 	return nil
 }
